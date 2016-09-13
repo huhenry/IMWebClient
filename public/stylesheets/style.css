@@ -1,0 +1,79 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.vertical-offset-100{
+  padding-top:100px;
+}
+#messages{
+    border:solid 1px #00B7FF;
+}
+.author{
+    color:#00B7FF;
+    font-size:12px;
+}
+#status{
+    padding-bottom: 10px;
+    color:#00B73F;
+}
+.clear{
+    clear:both;
+}
+.date{
+    color:#cccccc;
+    font-size:10px;
+}
+.getmessage{
+    color:#000000;
+    padding-left:5px;
+    font-size:14px;
+}
+.sendMessage .author{
+    color:#008833;
+    padding-right:10px;
+}
+.sendMessage .author,.sendMessage .date,.sendMessage .setmessage{
+    float:right;
+}
+#optBox{
+    padding:10px;
+}
+.row-no-padding > [class*="col-"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+@media screen and (max-width: 640px){
+    #messages{
+        height:200px;
+        width:400px;
+        padding:8px;
+    }
+}
+@media screen and (min-width: 641px) and (max-width: 800px){
+    #messages{
+        height:300px;
+        width:400px;
+        padding:8px;
+    }
+
+}
+@media screen and (min-width: 801px) and (max-width: 1024px){
+    #messages{
+        height:400px;
+        width:400px;
+        padding:15px;
+    }
+
+}
+@media screen and (min-width: 1025px){
+    #messages{
+        height:400px;
+        width:400px;
+        padding:15px;
+    }
+
+}
