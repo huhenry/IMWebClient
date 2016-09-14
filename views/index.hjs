@@ -1,173 +1,235 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>{{ title }}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-    <script type="text/javascript" src="/javascripts/jquery.min.js" ></script>
+    <script type="text/javascript" src="/javascripts/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
 
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-  </head>
-  <body>
-    <div class="container">
+</head>
+<body>
+<div class="container">
 
     <h1>{{ title }}</h1>
-        <div class="row">
+    <div class="row">
         <div class="col-md-4 col-md-offset-4" id="status">
 
         </div>
+    </div>
+    <div id="loginPanel" class="row vertical-offset-100">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Welcome to {{ title }}</h3>
+                </div>
+                <div class="panel-body">
+                    <div accept-charset="UTF-8">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control"
+                                       placeholder="Your email address or your name,email is recommended!" id="email"
+                                       name="email" type="text">
+                            </div>
+
+                            <input type="button" class="btn btn-lg btn-success btn-block" id="loginBtn" value="Talking">
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="loginPanel" class="row vertical-offset-100">
-            <div class="col-md-4 col-md-offset-4">
-            	<div class="panel panel-default">
-        			  <div class="panel-heading">
-        			      <h3 class="panel-title">Welcome to {{ title }}</h3>
-        			 </div>
-        			  <div class="panel-body">
-        			      <div accept-charset="UTF-8" >
-                             <fieldset>
-        			    	  	<div class="form-group">
-        			    		    <input class="form-control" placeholder="Your email address or your name,email is recommended!" id="email" name="email" type="text">
-        			    		</div>
+    </div>
 
-        			    		<input type="button" class="btn btn-lg btn-success btn-block" id="loginBtn" value="Talking">
-        			    	 </fieldset>
-        			      </div>
-        			   </div>
-        		</div>
-        	</div>
-        </div>
+    <div id="MessageBox" class="row">
 
-        <div id="MessageBox" class="row">
-
-            <div class="col-md-4 col-md-offset-4">
-                <div id="messages">
-
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 id="welcome" class="panel-title">Welcome to {{ title }}</h3>
                 </div>
-                <div id="optBox">
-                <div class="row row-no-padding">
-                <div class="col-xs-3 ">
-                    <input type="text" class="form-control" id="to" placeholder="send to User">
-                  </div>
-                 <div class="col-xs-8">
-                  <input type="text" class="form-control" id="comment" placeholder="Message">
-                  </div>
-                 <div class="col-xs-1">
-                  <button id="addComment" class="btn btn-default">发送</button>
-                  </div>
+                <div class="panel-body" style="padding:30px;">
+                    <div class="row  row-no-padding">
+                        <div id="online" class="panel panel-default col-md-2 col-sm-12">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">Onlines</h5>
+                            </div>
+                            <div class="panel-body">
+                                <div id="userList">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-sm-12">
+                            <div id="messages">
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div id="optBox" class="row row-no-padding">
+                        <div class="col-xs-4 ">
+                            <input type="text" class="form-control" id="to" placeholder="send to User">
+                        </div>
+                        <div class="col-xs-8">
+                            <input type="text" class="form-control" id="comment" placeholder="Message">
+                        </div>
+                        <div class="col-xs-12">
+
+                        </div>
+
+
+                        <div class="col-xs-12" style="padding-top:5px;">
+                            <button id="addComment" class="btn btn-success btn-block">发送</button>
+                        </div>
+                    </div>
                 </div>
-                </div>
+
             </div>
         </div>
 
     </div>
     <script type="text/javascript">
-    $(function(){
-        var socket = io("http://localhost:3000");
-        socket.on('connect', function () {
+        $(function () {
+            var socket = io("http://localhost:3000");
+            socket.on('connect', function () {
+
+            });
+
+            $("#MessageBox").hide();
+
+            $("#loginPanel").show();
+
+            $("#loginBtn").click(function () {
+                var email = $("#email").val();
+                var token = "fixedtoken";
+
+                socket.emit('authenticate', {token: token, email: email});
+
+            });
+
+            socket.on('authenticated', function () {
+                $("#MessageBox").show();
+                $("#loginPanel").hide();
+                $("#status").text("");
+                $("#welcome").text("Hi " + $("#email").val() + " , welcome to happy talking!");
+            });
+
+            socket.on('unauthorized', function () {
+                $("#status").text("you are not authorized!please check your email and try again!");
+            });
+
+            socket.on('onlineUsers', function (users) {
+                renderOnlineUser(users);
+            });
+
+            socket.on('offline',function(userName){
+                renderOffline(userName);
+            })
+
+
+            $("#addComment").click(function (event) {
+
+                var fromemail = $("#email").val();
+                var toUser = $("#to").val();
+                var userComment = $("#comment").val();
+                if (fromemail === "" || userComment === "" || toUser === "") {
+                    alert("Empty message or wrong user.Try again!");
+                    return;
+                }
+                var now = (new Date()).yyyymmdd();
+                socket.emit('sendMessage', {from: fromemail, to: toUser, message: userComment});
+
+                sendMessage({from: fromemail, to: toUser, message: userComment, sendDate: now}, function () {
+
+                    $("#to").val('');
+                    $("#comment").val('')
+                });
+
+            });
+
+            socket.on('receiveMessage', function (msg) {
+                //alert("get message from!");
+                if (Object.prototype.toString.call(msg) === '[object Array]') {
+                    //notifyMe(msg.user,msg.comment);
+                    for (var i = 0; i < msg.length; i++) {
+                        readMessage(msg[i]);
+                    }
+                }
+                else {
+                    readMessage(msg);
+                }
+
+            });
+
 
         });
 
-        $("#MessageBox").hide();
-
-        $("#loginPanel").show();
-
-        $("#loginBtn").click(function(){
-            var email = $("#email").val();
-                        var token = "fixedtoken";
-
-                        socket.emit('authenticate', {token: token, email: email});
-
-        });
-
-        socket.on('authenticated', function () {
-                    $("#MessageBox").show();
-                    $("#loginPanel").hide();
-                    $("#status").text("Hi "+$("#email").val()+" , welcome to happy talking!");
-                });
-
-        socket.on('unauthorized', function () {
-                    $("#status").text("you are not authorized!please check your email and try again!");
-                });
-
-
-
-        $("#addComment").click(function (event) {
-
-                    var fromemail = $("#email").val();
-                    var toUser = $("#to").val();
-                    var userComment = $("#comment").val();
-                    if (fromemail === "" || userComment === "" || toUser === "") {
-                        alert("Empty message or wrong user.Try again!");
-                        return;
-                    }
-                    var now = (new Date()).yyyymmdd();
-                    socket.emit('sendMessage', {from: fromemail, to: toUser, message: userComment});
-
-                    sendMessage({from: fromemail, to: toUser, message: userComment,sendDate:now},function(){
-
-                        $("#to").val('');
-                        $("#comment").val('')
-                    });
-
-                });
-
-                socket.on('receiveMessage', function (msg) {
-                    //alert("get message from!");
-                    if (Object.prototype.toString.call(msg) === '[object Array]') {
-                        //notifyMe(msg.user,msg.comment);
-                        for (var i = 0; i < msg.length; i++) {
-                            readMessage(msg[i]);
-                        }
-                    }
-                    else {
-                        readMessage(msg);
-                    }
-
-                });
-
-
-    });
-
-    function readMessage(msg) {
+        function readMessage(msg) {
             var msgHtml = "<div class='receiveMessage'> <span class='author'>" + msg.from + " </span><span class='date'> " + msg.sendDate + " </span> <br/><span class='getmessage'>" + msg.message + "</span></div>"
             $("#messages").append(msgHtml);
 
 
         }
-     function sendMessage(msg,cb){
-        var msgHtml = "<div class='sendMessage'> <span class='date'> " + msg.sendDate + " </span><span class='author'>" + msg.from + " </span> <br/><span class='setmessage'>" + msg.message + "</span></div><div class='clear'></div>"
-                    $("#messages").append(msgHtml);
-                    cb();
-     }
+        function sendMessage(msg, cb) {
+            var msgHtml = "<div class='sendMessage'> <span class='date'> " + msg.sendDate + " </span><span class='author'>" + msg.from + " </span> <br/><span class='setmessage'>" + msg.message + "</span></div><div class='clear'></div>"
+            $("#messages").append(msgHtml);
+            cb();
+        }
 
-     function resizeMessageBox(){
-        var height = 800;
-     }
-     Date.prototype.yyyymmdd = function() {
-       var year = this.getFullYear().toString();
-       var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
-       var month = mm.length===2 ? mm : '0'&&mm;
-       var dd = this.getDate().toString();
-       var day = dd.length===2 ? dd : '0'&&dd;
-       var hh = this.getHours().toString();
-       var hour = hh.length===2 ? hh : '0'&&hh;
-       var min= this.getMinutes().toString();
-       var mins = min.length===2? min: '0'&&min;
+        function renderOnlineUser(users) {
+            $("#userList").html("");
+            for (var i = 0; i < users.length; i++) {
+                var usr = users[i].length>12?users[i].substr(0,10)+"...":users[i];
+                var userHtml = "<div class='usr' onclick='sendTo(this)' title='"+users[i]+"' >" + usr + "</div>"
+                $("#userList").append(userHtml);
+            }
+        }
 
-       var dateStr = [year,month,day].join('-');
-       var timeStr = [hour,mins].join(':');
+        function renderOffline(userName){
+            var now = (new Date()).yyyymmdd();
+            var msgHtml = "<div class='offline'> "+userName+"  is offline!   "+now+"</div>"
+            $("#messages").append(msgHtml);
+        }
 
-       return dateStr + " " + timeStr;
-       }
+        function sendTo(usrDiv) {
+            var to = $(usrDiv).attr("title");
+            $("#to").val(to);
+            $("#comment").focus();
+        }
+
+        function resizeMessageBox() {
+            var height = 800;
+        }
+        Date.prototype.yyyymmdd = function () {
+            var year = this.getFullYear().toString();
+            var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
+            var month = mm.length === 2 ? mm : '0' && mm;
+            var dd = this.getDate().toString();
+            var day = dd.length === 2 ? dd : '0' && dd;
+            var hh = this.getHours().toString();
+            var hour = hh.length === 2 ? hh : '0' && hh;
+            var min = this.getMinutes().toString();
+            var mins = min.length === 2 ? min : '0' && min;
+
+            var dateStr = [year, month, day].join('-');
+            var timeStr = [hour, mins].join(':');
+
+            return dateStr + " " + timeStr;
+        }
     </script>
-  </body>
+</body>
 </html>

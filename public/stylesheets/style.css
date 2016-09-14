@@ -9,8 +9,17 @@ a {
 .vertical-offset-100{
   padding-top:100px;
 }
-#messages{
-    border:solid 1px #00B7FF;
+#online,#messages{
+    border:solid 2px #00B7FF;
+}
+#online{
+    height:400px;
+    overflow-y: auto;
+}
+#online .usr{
+    color:#008833;
+    text-decoration:underline;
+    cursor:pointer;
 }
 .author{
     color:#00B7FF;
@@ -40,16 +49,20 @@ a {
     float:right;
 }
 #optBox{
-    padding:10px;
+    padding-top:10px;
 }
 .row-no-padding > [class*="col-"] {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
+#messages .offline{
+    text-align: center;
+    color:#cccccc;
+    font-size:12px;
+}
 @media screen and (max-width: 640px){
     #messages{
         height:200px;
-        width:400px;
         padding:8px;
         overflow-y: scroll;
     }
@@ -57,27 +70,26 @@ a {
 @media screen and (min-width: 641px) and (max-width: 800px){
     #messages{
         height:300px;
-        width:400px;
         padding:8px;
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 
 }
 @media screen and (min-width: 801px) and (max-width: 1024px){
     #messages{
         height:400px;
-        width:400px;
+
         padding:15px;
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 
 }
 @media screen and (min-width: 1025px){
     #messages{
         height:400px;
-        width:400px;
+
         padding:15px;
-        overflow-y: scroll;
+        overflow-y:auto;
     }
 
 }
