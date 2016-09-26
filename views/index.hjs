@@ -104,10 +104,6 @@
     </div>
     <script type="text/javascript">
         $(function () {
-            var socket = io("http://localhost:3000");
-            socket.on('connect', function () {
-
-            });
 
             $("#MessageBox").hide();
 
@@ -116,29 +112,63 @@
             $("#loginBtn").click(function () {
                 var email = $("#email").val();
                 var token = "fixedtoken";
+                //var uniqueId= $
+                var queryStry = "token="+token+"&&email="+email+"&&uniqueID="+email;
+                socket = io("https://localhost:3000",{transports: ['websocket'], query:queryStry});
 
-                socket.emit('authenticate', {token: token, email: email});
+
+                //socket.emit('authenticate', {token: token, email: email});
+
+                socket.on('connect', function () {
+                    $("#MessageBox").show();
+                    $("#loginPanel").hide();
+                    $("#status").text("");
+                    $("#welcome").text("Hi " + $("#email").val() + " , welcome to happy talking!");
+                });
+
+                socket.on('unauthorized', function (msg) {
+                    console.log(msg);
+                    $("#status").text("you are not authorized!please check your email and try again!");
+                });
+
+                socket.on('onlineUsers', function (users) {
+                    renderOnlineUser(users);
+                });
+
+                socket.on('offline',function(userName){
+                    renderOffline(userName);
+                })
+
+
+                socket.on('receiveMessage', function (msg,cb) {
+                    //alert("get message from!");
+                    if (Object.prototype.toString.call(msg) === '[object Array]') {
+                        //notifyMe(msg.user,msg.comment);
+                        for (var i = 0; i < msg.length; i++) {
+                            readMessage(msg[i]);
+                        }
+                        cb("get a message");
+                    }
+                    else {
+                        readMessage(msg);
+
+                        cb("get a message");
+
+                    }
+
+                });
+
+                socket.on('deviceConnect',function(msg){
+
+                    var now = (new Date()).yyyymmdd();
+                    var msgHtml = "<div class='offline'> new Device is connected !   "+now+"</div>"
+                    $("#messages").append(msgHtml);
+
+                })
 
             });
 
-            socket.on('authenticated', function () {
-                $("#MessageBox").show();
-                $("#loginPanel").hide();
-                $("#status").text("");
-                $("#welcome").text("Hi " + $("#email").val() + " , welcome to happy talking!");
-            });
 
-            socket.on('unauthorized', function () {
-                $("#status").text("you are not authorized!please check your email and try again!");
-            });
-
-            socket.on('onlineUsers', function (users) {
-                renderOnlineUser(users);
-            });
-
-            socket.on('offline',function(userName){
-                renderOffline(userName);
-            })
 
 
             $("#addComment").click(function (event) {
@@ -161,19 +191,7 @@
 
             });
 
-            socket.on('receiveMessage', function (msg) {
-                //alert("get message from!");
-                if (Object.prototype.toString.call(msg) === '[object Array]') {
-                    //notifyMe(msg.user,msg.comment);
-                    for (var i = 0; i < msg.length; i++) {
-                        readMessage(msg[i]);
-                    }
-                }
-                else {
-                    readMessage(msg);
-                }
 
-            });
 
 
         });
@@ -201,7 +219,7 @@
 
         function renderOffline(userName){
             var now = (new Date()).yyyymmdd();
-            var msgHtml = "<div class='offline'> "+userName+"  is offline!   "+now+"</div>"
+            var msgHtml = "<div class='offline'> "+userName+"  is offline !   "+now+"</div>"
             $("#messages").append(msgHtml);
         }
 
