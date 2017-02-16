@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <title>{{ title }}</title>
@@ -18,7 +18,7 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="/javascripts/socket.io.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -114,7 +114,8 @@
                 var token = "fixedtoken";
                 //var uniqueId= $
                 var queryStry = "token="+token+"&&email="+email+"&&uniqueID="+email;
-                socket = io("https://localhost:3000",{transports: ['websocket'], query:queryStry});
+                                              //
+                socket = io("https://myvitals.ihealthlabs.com:5089",{transports: ['websocket'], forceNew:true, query:queryStry});
 
 
                 //socket.emit('authenticate', {token: token, email: email});
@@ -124,6 +125,8 @@
                     $("#loginPanel").hide();
                     $("#status").text("");
                     $("#welcome").text("Hi " + $("#email").val() + " , welcome to happy talking!");
+
+                    socket.emit("ready",{email:email});
                 });
 
                 socket.on('unauthorized', function (msg) {
@@ -146,6 +149,8 @@
                         //notifyMe(msg.user,msg.comment);
                         for (var i = 0; i < msg.length; i++) {
                             readMessage(msg[i]);
+
+                            socket.emit('receiveMessageSuccessed',{messageId:msg[i].messageId});
                         }
                         cb("get a message");
                     }
