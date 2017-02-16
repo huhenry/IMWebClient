@@ -114,7 +114,7 @@
                 var token = "fixedtoken";
                 //var uniqueId= $
                 var queryStry = "token="+token+"&&email="+email+"&&uniqueID="+email;
-                                              //
+                
                 socket = io("https://myvitals.ihealthlabs.com:5089",{transports: ['websocket'], forceNew:true, query:queryStry});
 
 
